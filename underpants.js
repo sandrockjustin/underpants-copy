@@ -48,6 +48,18 @@ _.identity = function(x){
 * _.typeOf([1,2,3]) -> "array"
 */
 
+_.typeOf = function(x){
+    if (Array.isArray(x)){
+        return "array";
+    } else if (x === null){
+        return "null";
+    } else if (x === undefined){
+        return "undefined";
+    } else {
+        return typeof x;
+    }
+}
+
 /** _.first
 * Arguments:
 *   1) An array
@@ -66,6 +78,17 @@ _.identity = function(x){
 *   _.first(["a", "b", "c"], 2) -> ["a", "b"]
 */
 
+_.first = function(array, num){
+
+    if (!(Array.isArray(array)) || num < 0){
+        return [];
+    } else if (typeof num !== "number" || num === undefined){
+        return array[0];
+    } else {
+        return array.slice(0, num);
+    }
+
+}
 
 /** _.last
 * Arguments:
@@ -85,6 +108,20 @@ _.identity = function(x){
 *   _.last(["a", "b", "c"], 2) -> ["b", "c"]
 */
 
+_.last = function(array, num){
+
+    if (!(Array.isArray(array)) || num < 0){
+        return [];
+    } else if (typeof num !== "number" || num === undefined){
+        return array[array.length - 1];
+    } else if (num > array.length) {
+        return array.slice(0, num);
+    } else {
+        return array.slice(array.length - num, array.length)
+    }
+
+}
+
 
 /** _.indexOf
 * Arguments:
@@ -102,6 +139,23 @@ _.identity = function(x){
 *   _.indexOf(["a","b","c"], "d") -> -1
 */
 
+_.indexOf = function(array, value){
+    if (!(Array.isArray(array))){
+
+        return -1;
+
+    } else {
+
+        for (let i = 0; i < array.length; i++){
+            if (array[i] === value){
+                return i;
+            }
+        }
+
+        return -1;
+
+    }
+}
 
 /** _.contains
 * Arguments:
@@ -117,6 +171,13 @@ _.identity = function(x){
 * Examples:
 *   _.contains([1,"two", 3.14], "two") -> true
 */
+_.contains = function(array, value){
+    if (value === undefined){
+        return false;
+    } else {
+        return (_.indexOf(array, value) > 0) ? true : false;
+    }
+}
 
 
 /** _.each
@@ -135,6 +196,9 @@ _.identity = function(x){
 *      -> should log "a" "b" "c" to the console
 */
 
+_.each = function(collection, func){
+
+}
 
 /** _.unique
 * Arguments:
@@ -214,7 +278,7 @@ _.identity = function(x){
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
 
-_.map = function(collection, functionPlaceholder){
+_.map = function(collection, func){
 
     let localArray = [];
 
@@ -226,7 +290,8 @@ _.map = function(collection, functionPlaceholder){
 
         for (let i = 0; i < collection.length; i++){
 
-            localArray.push(functionPlaceholder(i));
+            // This is pushing a unique result from function being passed unique arguments due to the current iteration parameters
+            localArray.push(func(collection(i), i, collection));
 
         }
 
@@ -238,7 +303,7 @@ _.map = function(collection, functionPlaceholder){
 
         for (let key in collection){
 
-            localArray.push(functionPlaceholder(collection[key]));
+            localArray.push(func(collection[key], key, collection));
 
         }
 
