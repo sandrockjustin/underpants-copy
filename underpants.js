@@ -21,6 +21,12 @@ var _ = {};
 *   _.identity({a: "b"}) === {a: "b"}
 */
 
+// Returns the argument
+// Accepts a single parameter as an argument
+_.identity = function(x){
+    return x; // Simply returns the argument
+}
+
 
 /** _.typeOf
 * Arguments:
@@ -41,7 +47,6 @@ var _ = {};
 * _.typeOf("javascript") -> "string"
 * _.typeOf([1,2,3]) -> "array"
 */
-
 
 /** _.first
 * Arguments:
@@ -208,6 +213,40 @@ var _ = {};
 * Examples:
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
+
+_.map = function(collection, functionPlaceholder){
+
+    let localArray = [];
+
+    if (Array.isArray(collection)){
+
+        // for loop going over item of array
+        // inside of loop: function executes
+        // value is pushed to localArray
+
+        for (let i = 0; i < collection.length; i++){
+
+            localArray.push(functionPlaceholder(i));
+
+        }
+
+    } else {
+
+        // for key in object loop going over object
+        // inside of loop: function executes
+        // value is pushed to localArray
+
+        for (let key in collection){
+
+            localArray.push(functionPlaceholder(collection[key]));
+
+        }
+
+    }
+
+    return localArray; // returns newly modified values
+
+}
 
 
 /** _.pluck
