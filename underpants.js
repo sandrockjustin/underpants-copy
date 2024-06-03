@@ -117,7 +117,7 @@ _.last = function(array, num){
     } else if (num > array.length) {
         return array.slice(0, num);
     } else {
-        return array.slice(array.length - num, array.length)
+        return array.slice(array.length - num, array.length);
     }
 
 }
@@ -175,7 +175,7 @@ _.contains = function(array, value){
     if (value === undefined){
         return false;
     } else {
-        return (_.indexOf(array, value) > 0) ? true : false;
+        return (_.indexOf(array, value) >= 0) ? true : false;
     }
 }
 
