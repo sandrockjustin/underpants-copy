@@ -198,6 +198,16 @@ _.contains = function(array, value){
 
 _.each = function(collection, func){
 
+    if (Array.isArray(collection)){
+        for (let i = 0; i < collection.length; i++){
+            func(collection[i], i, collection);
+        }
+    } else {
+        for (var x in collection){
+            func(collection[x], x, collection);
+        }
+    }
+
 }
 
 /** _.unique
@@ -210,6 +220,9 @@ _.each = function(collection, func){
 *   _.unique([1,2,2,4,5,6,5,2]) -> [1,2,4,5,6]
 */
 
+_.unique = function(array){
+
+}
 
 /** _.filter
 * Arguments:
