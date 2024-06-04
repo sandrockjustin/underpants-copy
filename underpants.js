@@ -221,7 +221,19 @@ _.each = function(collection, func){
 */
 
 _.unique = function(array){
+    let localArray = [];
 
+    for (let i = 0; i < array.length; i++){
+
+        // if the index of the first occurrence of array[i]
+        // is equal to the current index
+        if (_.indexOf(array, array[i]) === i){
+            localArray.push(array[i]);
+        }
+
+    }
+
+    return localArray;
 }
 
 /** _.filter
@@ -277,6 +289,22 @@ _.filter = function(array, func){
 *   _.reject([1,2,3,4,5], function(e){return e%2 === 0}) -> [1,3,5]
 */
 
+_.reject = function(array, func){
+
+    let localArray = [];
+
+    if (Array.isArray(array)){
+        for (let i = 0; i < array.length; i++){
+
+            if (func(array[i], i, array) === false){
+                localArray.push(array[i]);
+            }
+        }
+    }
+
+    return localArray;
+}
+
 
 /** _.partition
 * Arguments:
@@ -296,6 +324,29 @@ _.filter = function(array, func){
 *   }); -> [[2,4],[1,3,5]]
 }
 */
+
+_.partition = function(array, func){
+    
+    let localArray = [];
+    
+    if (Array.isArray(array)){
+        let trueArray = [];
+        let falseArray = [];
+
+        for (let i = 0; i < array.length; i++){
+            if ((func(array[i], i, array)) === true){
+                trueArray.push(array[i]);
+            } else {
+                falseArray.push(array[i]);
+            }
+        }
+
+        localArray.push(trueArray, falseArray);
+    }
+
+    return localArray;
+
+}
 
 
 /** _.map
@@ -327,7 +378,7 @@ _.map = function(collection, func){
         for (let i = 0; i < collection.length; i++){
 
             // This is pushing a unique result from function being passed unique arguments due to the current iteration parameters
-            localArray.push(func(collection(i), i, collection));
+            localArray.push(func(collection[i], i, collection));
 
         }
 
@@ -361,6 +412,24 @@ _.map = function(collection, func){
 *   _.pluck([{a: "one"}, {a: "two"}], "a") -> ["one", "two"]
 */
 
+_.pluck = function(array, prop){
+
+
+    return _.map(array, function(element){
+  
+        // this block of code is testing if the property exists
+        // if it does then it will return the value stored at the property
+        if (element.hasOwnProperty(prop)){
+          
+          return element[prop];
+          
+        }
+        //
+        
+    });
+
+}
+
 
 /** _.every
 * Arguments:
@@ -382,6 +451,43 @@ _.map = function(collection, func){
 *   _.every([2,4,6], function(e){return e % 2 === 0}) -> true
 *   _.every([1,2,3], function(e){return e % 2 === 0}) -> false
 */
+
+_.every = function(collection, func){
+
+    if (func === undefined || func === null || typeof func !== "function"){
+        for (let i = 0; i < collection.length; i++){
+            if (Boolean(collection[i]) === false){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    if (Array.isArray(collection)){
+
+        for (let i = 0; i < collection.length; i++){
+            if (func(collection[i], i, collection) === false){
+                return false;
+            }
+        }
+
+        return true;
+
+    } else {
+
+        for (let x in collection){
+            if (func(collection[x], x, collection) === false){
+                return false;
+            }
+
+            
+        }
+        
+        return true;
+    }
+
+}
 
 
 /** _.some
