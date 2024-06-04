@@ -240,6 +240,29 @@ _.unique = function(array){
 *   use _.each in your implementation
 */
 
+_.filter = function(array, func){
+
+    // creates a localized array that will receive passing values
+    let localArray = [];
+    
+    // iterating over each element of array argument
+    for (let i = 0; i < array.length; i++){
+        
+        // if the function tested with array parameter returns true
+        if(func(array[i], i, array) === true){
+            // push passing element to the localArray
+            localArray.push(array[i]);
+          
+        }
+      
+        // implied Else: do nothing
+
+    }
+    
+    // return the localArray containing all passing values
+    return localArray;
+}
+
 
 /** _.reject
 * Arguments:
