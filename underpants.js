@@ -480,8 +480,6 @@ _.every = function(collection, func){
             if (func(collection[x], x, collection) === false){
                 return false;
             }
-
-            
         }
         
         return true;
