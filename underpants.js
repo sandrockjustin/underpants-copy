@@ -765,11 +765,13 @@ _.reduce = function(array, func, seed){
     // if the seed does exist
     if (seed !== undefined && seed !== null){
 
-        // intialize the previous result to the ssed
+        // intialize the previous result to the seed; this will eventually be equal to the final return value of the function argument
         let prevResult = seed;
 
+        // for each item in the array argument
         for (let i = 0; i < array.length; i++){
 
+            // the function argument is receiving prevResult (the return value of the previous function) to use for testing
             // set prevResult to the returned value of our function argument
             prevResult = func(prevResult, array[i], i);
 
@@ -780,12 +782,13 @@ _.reduce = function(array, func, seed){
 
     } else {
 
-        // if no seed exists, set the seed equal to the first item contained in the array argument
+        // if no seed exists, set the seed equal to the first item contained in the array argument; ; this will eventually be equal to the final return value of the function argument
         let prevResult = array[0];
 
         // because the prevResult has been set to array[0], we will start at array[1]
         for (let x = 1; x < array.length; x++){
 
+            // the function argument is receiving prevResult (the return value of the previous function) to use for testing
             // set prevResult to the returned value of our function argument
             prevResult = func(prevResult, array[x], x);
 
