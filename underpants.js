@@ -438,9 +438,9 @@ _.partition = function(array, func){
         // make another array for False boolean values
         let falseArray = [];
 
-        _.each(array, function(x, y, z){
+        _.each(array, function(x){
 
-            if(func(x, y, z) === true){
+            if(func(x) === true){
 
                 trueArray.push(x);
 
