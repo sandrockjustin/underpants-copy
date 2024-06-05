@@ -49,13 +49,29 @@ _.identity = function(x){
 */
 
 _.typeOf = function(x){
+
+    // if argument is of the Array prototype
     if (Array.isArray(x)){
+
+        // tell the user that it is an array
         return "array";
+
+    // if the argument is of the null value
     } else if (x === null){
+
+        // tell the user that the value is of null data type
         return "null";
+
+    // if the argument is undefined in value
     } else if (x === undefined){
+
+        // tell the user that the value is undefined
         return "undefined";
+
+    // otherwise, try to determine the data type
     } else {
+
+        // tell the user the type of data that the argument is
         return typeof x;
     }
 }
@@ -80,11 +96,23 @@ _.typeOf = function(x){
 
 _.first = function(array, num){
 
+    // if the array argument is not an array, or if our number is less than 0 (not an index)
     if (!(Array.isArray(array)) || num < 0){
+
+        // return an empty array
         return [];
+
+    // if the num argument is not a number or is undefined
     } else if (typeof num !== "number" || num === undefined){
+
+        // try to return the first element of the array
         return array[0];
+    
+    // otherwise, run as normal
     } else {
+
+        // return a slice of our array starting at 0 and ending at the num argument
+        // this will give us the first (num) indices of array
         return array.slice(0, num);
     }
 
@@ -110,13 +138,29 @@ _.first = function(array, num){
 
 _.last = function(array, num){
 
+    // if the array argument is not an array, or if our number is less than 0 (not an index)
     if (!(Array.isArray(array)) || num < 0){
+        
+        // return an empty array
         return [];
+    
+    // if the num argument is not a number or is undefined
     } else if (typeof num !== "number" || num === undefined){
+
+        // return the last item of the array
         return array[array.length - 1];
+
+    // if the num argument is greater than the overall length of our array argument
     } else if (num > array.length) {
+
+        // return a slice of our array from 0 and to our num argument
         return array.slice(0, num);
+    
+    // otherwise
     } else {
+
+        // return a slice of our array starting from (num) before the end of the array, up to the end of the array
+        // this should give us the last (num) index values of our array
         return array.slice(array.length - num, array.length);
     }
 
@@ -140,18 +184,29 @@ _.last = function(array, num){
 */
 
 _.indexOf = function(array, value){
+
+    // if the array argument is not an array
     if (!(Array.isArray(array))){
 
+        // return -1 (false), because it would not have any indices
         return -1;
 
+    // if the array argument is an array
     } else {
 
+        // for each item of the array
         for (let i = 0; i < array.length; i++){
+
+            // if the current element is equal to our value
             if (array[i] === value){
+
+                // return the index where the current element (and our sought after value) is stored
                 return i;
+
             }
         }
 
+        // if the item cannot be found in the array, return -1 (false)
         return -1;
 
     }
@@ -171,12 +226,24 @@ _.indexOf = function(array, value){
 * Examples:
 *   _.contains([1,"two", 3.14], "two") -> true
 */
+
 _.contains = function(array, value){
+    
+    // if no value is given, there is nothing to test
     if (value === undefined){
+
+        // because there is nothing to test, return false
         return false;
+
     } else {
+
+        // if _.indexOf provides a value greater than or equal to 0
+        // then that means that the item is contained somewhere in the array, and True should be returned
+        // if _.indexOf returns a value less than 0, then that means the item is not in the array and False should be returned
         return (_.indexOf(array, value) >= 0) ? true : false;
+
     }
+
 }
 
 
@@ -196,15 +263,33 @@ _.contains = function(array, value){
 *      -> should log "a" "b" "c" to the console
 */
 
+// The _.each method is similar to the _.map method, but it does not have a return value.
+    // The _.each method determines if a collection is an array or object
+    // The _.each method then iterates over every item of the array/object
+    // The _.each method then executes the function argument on each item of the array/object
+
 _.each = function(collection, func){
 
+    // if the collection is an Array
     if (Array.isArray(collection)){
+
+        // treat the collection as an Array, and we will use a standard For Loop
         for (let i = 0; i < collection.length; i++){
+
+            // for EACH item in the collection, do function argument
             func(collection[i], i, collection);
+
         }
+    
+    // if the collection is an Object
     } else {
+        
+        // treat the collection as an Object, and we will use a For In Loop
         for (var x in collection){
+
+            // For EACH item in the collection, do function argument
             func(collection[x], x, collection);
+
         }
     }
 
@@ -223,11 +308,19 @@ _.each = function(collection, func){
 _.unique = function(array){
     let localArray = [];
 
+    // for each item in this array
     for (let i = 0; i < array.length; i++){
 
-        // if the index of the first occurrence of array[i]
-        // is equal to the current index
+        // if the return value of _.indexOf(array, currentElement)
+            // _.indexOf returns the first index (number)
+            // _.indexOf stops when it finds the first occurrence of a word
+            // if _.indexOf does not find the word anywhere, it returns -1
+            // if _.indexOf does find the word, it returns the index
+
+        // if the result from _.indexOf() matches the current index (i)
         if (_.indexOf(array, array[i]) === i){
+
+            // then this value is unique, and should be pushed to the localArray
             localArray.push(array[i]);
         }
 
@@ -293,15 +386,22 @@ _.reject = function(array, func){
 
     let localArray = [];
 
+    // if the array is actually an array
     if (Array.isArray(array)){
+
+        // for each item of that array
         for (let i = 0; i < array.length; i++){
 
+            // if the current element, when tested with the function argument, returns false
             if (func(array[i], i, array) === false){
+
+                // push the current element that has failed the test (function argument) to an array
                 localArray.push(array[i]);
             }
         }
     }
 
+    // return an array of all elements that failed our test (function argument)
     return localArray;
 }
 
@@ -329,21 +429,36 @@ _.partition = function(array, func){
     
     let localArray = [];
     
+    // if the item is an array
     if (Array.isArray(array)){
+
+        // make one array for True boolean values
         let trueArray = [];
+
+        // make another array for False boolean values
         let falseArray = [];
 
         for (let i = 0; i < array.length; i++){
+
+            // if the current element passes the test (function argument)
             if ((func(array[i], i, array)) === true){
+
+                // push the current element to the passing array (trueArray)
                 trueArray.push(array[i]);
+
+            // if the current element does not pass the test (function argument)
             } else {
+
+                // push the current element to the failure array (falseArray)
                 falseArray.push(array[i]);
             }
         }
 
+        // push these two arrays into a hierarchal array (localArray)
         localArray.push(trueArray, falseArray);
     }
 
+    // return localArray, containing one array of elements that passed the test and another array of elements that failed the test
     return localArray;
 
 }
@@ -365,31 +480,39 @@ _.partition = function(array, func){
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
 
+/* The _.map function enables us to loop over a collection of data, whether it be an Array or an Object. The _.map method enables us to apply a set of code (function) to each item of a collection. It then returns an array comprising all function return values throughout the For Loop.
+    1. the _.map function determines what datatype a collection is, so that it knows how to iterate over the collection
+    2. the _.map function, now knowing how to iterate over each item, then iterates over every item of the collection
+    3. the _.map function applies the function argument to each item of the array individually
+    4. for each return value, the _.map function stores the return value to an array
+    5. the _.map function then returns an array comprising all return values (from our function argument being applied to each individual item of the collection)
+*/
 _.map = function(collection, func){
 
     let localArray = [];
 
+    // If the collection is an array
     if (Array.isArray(collection)){
 
-        // for loop going over item of array
-        // inside of loop: function executes
-        // value is pushed to localArray
-
+        // we must use a For Loop to go over every item of the collection
         for (let i = 0; i < collection.length; i++){
 
-            // This is pushing a unique result from function being passed unique arguments due to the current iteration parameters
+            // for every item of the collection
+            // push the return value of our test (func argument)
+            // to the localArray
             localArray.push(func(collection[i], i, collection));
 
         }
 
+    // If the collection is an object
     } else {
 
-        // for key in object loop going over object
-        // inside of loop: function executes
-        // value is pushed to localArray
-
+        // we must use a For In Loop to go over every item of the collection
         for (let key in collection){
 
+            // for every item of the collection
+            // push the return value of our test (func argument)
+            // to the localArray
             localArray.push(func(collection[key], key, collection));
 
         }
@@ -414,14 +537,19 @@ _.map = function(collection, func){
 
 _.pluck = function(array, prop){
 
-
     return _.map(array, function(element){
   
-        // this block of code is testing if the property exists
-        // if it does then it will return the value stored at the property
+        // this is the function argument
+        // the function is testing the first parameter, array
+        
+        // a for loop is occurring in _.map
+        // element uses placeholder one in (func(collection[i], i, collection)) established in map
+        // element is therefore equal to the current element inside of the _.map For Loop
+        // if any item of the array argument (element) has its own property of prop
         if (element.hasOwnProperty(prop)){
           
-          return element[prop];
+            // return the value stored at the current item (in the for loop) at its property (prop)
+            return element[prop];
           
         }
         //
@@ -452,36 +580,82 @@ _.pluck = function(array, prop){
 *   _.every([1,2,3], function(e){return e % 2 === 0}) -> false
 */
 
+// this function accepts two arguments: a collection and a function
+// 
 _.every = function(collection, func){
 
+    // if no function is given
     if (func === undefined || func === null || typeof func !== "function"){
-        for (let i = 0; i < collection.length; i++){
-            if (Boolean(collection[i]) === false){
-                return false;
-            }
-        }
 
-        return true;
+        // if the collection is an array
+        if (Array.isArray(collection)){
+
+            // treat as an array, and use a standard For Loop
+            for (let i = 0; i < collection.length; i++){
+
+                // for every index, if the current element is equal to False when converted into a boolean
+                if (Boolean(collection[i]) === false){
+
+                    // return false
+                    return false;
+                }
+            }
+
+            // if all elements of the array are truthy, return true
+            return true;
+        
+        // if the collection is an object
+        } else {
+
+            // treat as an object, and use a For In Loop
+            for (var x in collection){
+
+                // for every key, if any value is equal to False when converted into a boolean
+                if (Boolean(collection[x]) === false){
+
+                    // return false
+                    return false;
+
+                }
+            }
+
+            // if all elements of the object are truthy, return true
+            return true;
+        }
     }
 
+    // if the collection is an array
     if (Array.isArray(collection)){
 
+        // treat as an array, using a For Loop
         for (let i = 0; i < collection.length; i++){
+
+            // if the current element, when used with the function argument, fails the test and the function returns false
             if (func(collection[i], i, collection) === false){
+
+                // then return false and stop iterating
                 return false;
             }
         }
 
+        // if all elements of the array pass the test (function argument), return true
         return true;
 
+    // if the collection is an object
     } else {
 
+        // treat as an object, use a For In Loop
         for (let x in collection){
+
+            // if the current value, when used with the function argument, fails the test and the function returns false
             if (func(collection[x], x, collection) === false){
+
+                // the collection has failed the test and false will be returned, iterations will stop
                 return false;
             }
         }
         
+        // if all values of the collection are otherwise passing the test (established in function argument), return true
         return true;
     }
 
@@ -509,11 +683,21 @@ _.every = function(collection, func){
 *   _.some([1,2,3], function(e){return e % 2 === 0}) -> true
 */
 
+
+// this function accepts two arguments: a collection and a function
+// this function tests if there is an item in the collection that passes a test (from a function argument)
 _.some = function(collection, func){
 
+    // if a function argument is not provided
     if (func === undefined || func === null || typeof func !== "function"){
+
+        // iterate over every item of the collection
         for (let i = 0; i < collection.length; i++){
+
+            // if every item, when converted to a boolean, returns true
             if (Boolean(collection[i]) === true){
+
+                // then return true
                 return true;
             }
         }
@@ -521,22 +705,36 @@ _.some = function(collection, func){
         return false;
     }
 
+    // if the collection is an array
     if (Array.isArray(collection)){
+
+        // treat the collection as an array, using a For Loop for arrays
         for (let i = 0; i < collection.length; i++){
+
+            // if the current element (collection[i]) passes the tests in the function argument, and the function returns true as a result 
             if (func(collection[i], i, collection) === true){
+
+                // then we will return true to indicate that at least one element (collection[i]) passed the function argument test
                 return true;
             }
         }
-
+        // otherwise we return false to indicate that no elements of the collection satisfied the test (function argument)
         return false;
 
     } else {
+
+        // treat the collection as an object, using a For In loop for objects
         for (var x in collection){
+
+            // if the current element (collection[x]) passes the tests in the function argument, and the function returns true as a result 
             if (func(collection[x], x, collection) === true){
+
+                // then we will return true to indicate that that at least one element (collection[x]) passed the function argument test
                 return true;
             }
         }
 
+        // otherwise we return false to indicate that no elements of the collection satisfied the test (function argument)
         return false;
     }
 
@@ -561,30 +759,39 @@ _.some = function(collection, func){
 *   _.reduce([1,2,3], function(previousSum, currentValue, currentIndex){ return previousSum + currentValue }, 0) -> 6
 */
 
+// _.reduce is taking three arguments: an array, a function, and a seed
 _.reduce = function(array, func, seed){
 
+    // if the seed does exist
     if (seed !== undefined && seed !== null){
 
+        // intialize the previous result to the ssed
         let prevResult = seed;
 
         for (let i = 0; i < array.length; i++){
 
+            // set prevResult to the returned value of our function argument
             prevResult = func(prevResult, array[i], i);
 
         }
         
+        // return prevResult, the final return value from our function argument
         return prevResult;
 
     } else {
 
+        // if no seed exists, set the seed equal to the first item contained in the array argument
         let prevResult = array[0];
 
+        // because the prevResult has been set to array[0], we will start at array[1]
         for (let x = 1; x < array.length; x++){
 
+            // set prevResult to the returned value of our function argument
             prevResult = func(prevResult, array[x], x);
 
         }       
         
+        // return prevResult, the final return value from our function argument
         return prevResult;
     }
 }
@@ -604,10 +811,15 @@ _.reduce = function(array, func, seed){
 *   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
 */
 
+// The ... rest operator is used so that the _.extend() can take infinite arguments
+// This function is used to easily add Object key-value pairs to an Object
+// This function is essentially a different version of Object.assign()
 _.extend = function(objAlpha, objBravo, ...objOmega){
     
+    // Using Object.assign() method to copy argument data to objAlpha
     Object.assign(objAlpha, objBravo, ...objOmega);
 
+    // Returns objAlpha after changes
     return objAlpha;
 
 }
