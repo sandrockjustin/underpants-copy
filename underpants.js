@@ -438,6 +438,21 @@ _.partition = function(array, func){
         // make another array for False boolean values
         let falseArray = [];
 
+        _.each(array, function(x, y, z){
+
+            if(func(x, y, z) === true){
+
+                trueArray.push(x);
+
+            } else {
+
+                falseArray.push(x);
+
+            }
+
+        });
+
+        /*
         for (let i = 0; i < array.length; i++){
 
             // if the current element passes the test (function argument)
@@ -453,6 +468,7 @@ _.partition = function(array, func){
                 falseArray.push(array[i]);
             }
         }
+        */
 
         // push these two arrays into a hierarchal array (localArray)
         localArray.push(trueArray, falseArray);
