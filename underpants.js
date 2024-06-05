@@ -565,19 +565,27 @@ _.reduce = function(array, func, seed){
 
     if (seed !== undefined && seed !== null){
 
-        let prevResult;
+        let prevResult = seed;
 
         for (let i = 0; i < array.length; i++){
 
-            if (i === 0){
-                prevResult = seed;
-            }
-
             prevResult = func(prevResult, array[i], i);
+
         }
+        
+        return prevResult;
 
     } else {
+
+        let prevResult = array[0];
+
+        for (let x = 1; x < array.length; x++){
+
+            prevResult = func(prevResult, array[x], x);
+
+        }       
         
+        return prevResult;
     }
 }
 
@@ -595,6 +603,14 @@ _.reduce = function(array, func, seed){
 *   _.extend(data, {b:"two"}); -> data now equals {a:"one",b:"two"}
 *   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
 */
+
+_.extend = function(objAlpha, objBravo, ...objOmega){
+    
+    Object.assign(objAlpha, objBravo, ...objOmega);
+
+    return objAlpha;
+
+}
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////
